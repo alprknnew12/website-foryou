@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Youuuu</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 22px;
+      color: #c2185b;
+    }
+
+    .subjudul {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    .carousel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-item {
+      flex: 0 0 70%;
+      margin: 0 10px;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+
+    .carousel-item.active {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      margin-top: 20px;
+      background: #fcd5ce;
+      padding: 10px;
+    }
+
+    audio {
+  width: 90%;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+    .desc {
+      font-style: italic;
+      font-size: 14px;
+      padding: 20px;
+      color: #333;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>For Youu Minee🥺🤍</h1>
+  <p class="subjudul">Putar lagunya duluu yaa abis ituu geser kekanan, jangann lupaa jugaaa dibacaaa tulisannyaaa </p>
+<!-- 🎵 Musik langsung di bawah judul -->
+<audio id="musik" autoplay loop controls>
+  <source src="lagu.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio player.
+</audio>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="carousel-track" id="track">
+      <div class="carousel-item"><img src="1.png" alt="Foto 1"></div>
+      <div class="carousel-item"><img src="2.png" alt="Foto 2"></div>
+      <div class="carousel-item"><img src="3.png" alt="Foto 3"></div>
+      <div class="carousel-item"><img src="4.png" alt="Foto 4"></div>
+      <div class="carousel-item"><img src="5.png" alt="Foto 5"></div>
+    </div>
+  </div>
+
+  <!-- Musik (langsung autoplay) -->
+  
+
+  <!-- Deskripsi sesuai slide -->
+  <div class="desc" id="desc">
+    Ini foto pertama kita waktu ketawa bareng di taman 💖
+  </div>
+
+  <script>
+    const track = document.getElementById('track');
+    const items = document.querySelectorAll('.carousel-item');
+    const desc = document.getElementById('desc');
+
+    const deskripsiList = [
+      "liattt wajah kamuu disiniii bikinnn hatii aku meleleh pelan pelan.. senyumm kamuu ituu kaya matahri kecil yang menyinari hari hari aku, CANTIKK BANGETTT GAADA LAWANNYAAA, kadang aku mikir , kok bisa ya tuhan menciptakan seseorang seindah ini buat akuu?? 💖",
+      "ututututu liattt gayaaa bangett yaa kamuuu😆, gayaa kamuu disinii tegas banget dan berwibawaa,tapii justruu ituu yang bikimn aku gemesss dann jatuh cinta. kamuu keliatamm kerenn bangett, kayak ceweee kuat yang tetepp manis.dan jujur aja, AKU BANGGAA BANGET PUNYA KAMUU ,kiww kakaa pramukaa  ",
+      "kitaaa berduaaa dalamm satuu frameee berbentukk hatii kayaa lambangg kecill dari rasaa yang udaa kita bangunnn bareng barenggg. setiap kali aku liatt foto inii , aku cuaaa bisaa bilangg 'bersyukurr bangett ketemu cewee sabar dan sekuatt kamuu'. kamu bukann cuma pacar , tapii kamu rumah buat anak kecil yang nyasar ini🏠🤍",
+      "fotoo inii ituu vibesntaaa kitaa bangett, naturall , lucuu dan gaa dibuat buat , tapii tetep kelitan serasii dan bahagiaa😅. akuu sukaa banget momen ini , karena waktuu ituu aku ngerasaaa kayaa duniaaa milikk berduaaa , dan sisanyaaa ngontrakkkk",
+      "pelukannn kamuuu waktu ituuu bikinn akuuu diemmm, diemm karenaa ngrasaa tenanggg. hangatnyaa lebii dariii selimut . rasanyaaa kayaaaa semuaa capee aku tuuu langsung hilang . kalau bolee jujur itu pelukan pertama dan pelukan yang bikinnn aku ngerasa dicintai sepenuh hati. jangannn pernah pergii yaaa. akuu mauu pelukan kaya ginii terusss 🥺❤️"
+    ];
+
+    let index = 0;
+
+    function updateCarousel() {
+      items.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+          item.classList.add('active');
+        }
+      });
+
+      const slideWidth = items[0].offsetWidth + 20;
+      track.style.transform = `translateX(calc(50% - ${(index + 0.5) * slideWidth}px))`;
+
+      desc.textContent = deskripsiList[index] || "";
+    }
+
+    let startX = 0;
+
+    track.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    track.addEventListener("touchend", (e) => {
+      let endX = e.changedTouches[0].clientX;
+      let diff = startX - endX;
+
+      if (diff > 30 && index < items.length - 1) {
+        index++;
+      } else if (diff < -30 && index > 0) {
+        index--;
+      }
+
+      updateCarousel();
+    });
+
+    window.addEventListener("load", () => {
+      updateCarousel();
+
+      // Autoplay musik (beberapa browser perlu interaksi pengguna dulu)
+      const audio = document.getElementById("musik");
+      setTimeout(() => {
+        audio.play().catch(() => {
+          // Kalau autoplay gagal, karena browser blokir, bisa user klik dulu
+          console.log("Autoplay gagal. User perlu klik dulu.");
+        });
+      }, 500);
+    });
+
+    window.addEventListener("resize", updateCarousel);
+  </script>
+
+</body>
+</html>
